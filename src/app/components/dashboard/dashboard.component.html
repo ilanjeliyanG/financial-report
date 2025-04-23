@@ -1,0 +1,51 @@
+<div class="dashboard-container">
+  <!-- Portfolio Summary Cards -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <h3>Total Portfolio Value</h3>
+      <p class="value"> ₹ {{portfolioMetrics.totalValue | number:'1.0-0'}}</p>
+    </div>
+    <div class="metric-card">
+      <h3>Daily Change</h3>
+      <p class="value" [ngClass]="{'positive': portfolioMetrics.dailyChange >= 0, 'negative': portfolioMetrics.dailyChange < 0}">
+         ₹ {{portfolioMetrics.dailyChange | number:'1.0-0'}} ({{portfolioMetrics.dailyChangePercent}}%)
+      </p>
+    </div>
+    <div class="metric-card">
+      <h3>YTD Return</h3>
+      <p class="value" [ngClass]="{'positive': portfolioMetrics.ytdReturn >= 0, 'negative': portfolioMetrics.ytdReturn < 0}">
+        {{portfolioMetrics.ytdReturn}}%
+      </p>
+    </div>
+    <div class="metric-card">
+      <h3>Risk Score</h3>
+      <p class="value">{{portfolioMetrics.riskScore}}</p>
+    </div>
+  </div>
+
+  <!-- Charts Grid -->
+  <div class="charts-grid" *ngIf="isBrowser">
+    <div class="chart-container">
+      <canvas baseChart
+        [type]="'line'"
+        [data]="performanceChartData"
+        [options]="performanceChartOptions">
+      </canvas>
+    </div>
+    <div class="chart-container">
+      <canvas baseChart
+        [type]="'doughnut'"
+        [data]="allocationChartData"
+        [options]="allocationChartOptions">
+      </canvas>
+    </div>
+  </div>
+  <div class="charts-grid" *ngIf="!isBrowser">
+    <div class="chart-container">
+      <div class="chart-placeholder">Portfolio Performance Chart</div>
+    </div>
+    <div class="chart-container">
+      <div class="chart-placeholder">Asset Allocation Chart</div>
+    </div>
+  </div>
+</div> 

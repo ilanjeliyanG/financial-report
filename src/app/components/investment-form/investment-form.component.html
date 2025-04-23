@@ -1,0 +1,99 @@
+<div class="investment-form-container">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>Add New Investment</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="investmentForm" (ngSubmit)="onSubmit()">
+        <!-- Asset Type -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Asset Type</mat-label>
+          <mat-select formControlName="assetType">
+            <mat-option *ngFor="let type of assetTypes" [value]="type.value">
+              {{type.label}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="investmentForm.get('assetType')?.hasError('required')">
+            {{getErrorMessage('assetType')}}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Quantity -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Quantity</mat-label>
+          <input matInput type="number" formControlName="quantity" step="0.000001">
+          <mat-error *ngIf="investmentForm.get('quantity')?.hasError('required') || investmentForm.get('quantity')?.hasError('min')">
+            {{getErrorMessage('quantity')}}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Purchase Price -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Purchase Price</mat-label>
+          <input matInput type="number" formControlName="purchasePrice" step="0.01">
+          <span matPrefix> ₹&nbsp;</span>
+          <mat-error *ngIf="investmentForm.get('purchasePrice')?.hasError('required') || investmentForm.get('purchasePrice')?.hasError('min')">
+            {{getErrorMessage('purchasePrice')}}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Purchase Date -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Purchase Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="purchaseDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="investmentForm.get('purchaseDate')?.hasError('required')">
+            {{getErrorMessage('purchaseDate')}}
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Submit Button -->
+        <div class="button-container">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!investmentForm.valid">
+            Review Investment
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Review Section -->
+  <mat-card *ngIf="showReview" class="review-card">
+    <mat-card-header>
+      <mat-card-title>Review Investment Details</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="review-details">
+        <div class="review-item">
+          <span class="label">Asset Type:</span>
+          <span class="value">{{getAssetTypeLabel(formData?.assetType || '')}}</span>
+        </div>
+        <div class="review-item">
+          <span class="label">Quantity:</span>
+          <span class="value">{{formData?.quantity}}</span>
+        </div>
+        <div class="review-item">
+          <span class="label">Purchase Price:</span>
+          <span class="value">  ₹ {{formData?.purchasePrice}}</span>
+        </div>
+        <div class="review-item">
+          <span class="label">Purchase Date:</span>
+          <span class="value">{{formData?.purchaseDate | date}}</span>
+        </div>
+        <div class="review-item total">
+          <span class="label">Total Investment:</span>
+          <span class="value">  ₹ {{totalInvestment | number:'1.2-2'}}</span>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <button mat-button color="warn" (click)="cancelReview()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="confirmSubmission()">Confirm Investment</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+</div> 
