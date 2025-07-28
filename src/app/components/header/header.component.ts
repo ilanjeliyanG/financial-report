@@ -25,11 +25,11 @@ import { RouterLink } from '@angular/router';
       <!-- Desktop Navigation -->
       <div class="desktop-nav">
         <button mat-button routerLink="/">
-          <mat-icon>dashboard</mat-icon>
+          <!-- <mat-icon>dashboard</mat-icon> -->
           Dashboard
         </button>
         <button mat-button routerLink="/add-investment">
-          <mat-icon>add_circle</mat-icon>
+          <!-- <mat-icon> Add Investment</mat-icon> -->
           Add Investment
         </button>
       </div>
@@ -40,11 +40,11 @@ import { RouterLink } from '@angular/router';
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item routerLink="/">
-          <mat-icon>dashboard</mat-icon>
+          <!-- <mat-icon>dashboard</mat-icon> -->
           <span>Dashboard</span>
         </button>
         <button mat-menu-item routerLink="/add-investment">
-          <mat-icon>add_circle</mat-icon>
+          <!-- <mat-icon> Add Investment</mat-icon> -->
           <span>Add Investment</span>
         </button>
       </mat-menu>
